@@ -32,6 +32,19 @@ const menu = [
    }
 ];
 
+const roleQuestions = [
+   {
+      type: "input",
+      name: "name",
+      message: "What is the name of the role?",
+   },
+   {
+      type: 'input',
+      name: 'salary',
+      message: 'What is the salary of the role?'
+   }
+];
+
 function mainMenu() {
    inquirer.prompt(menu)
       .then((data) => {
@@ -94,6 +107,10 @@ function viewAllRoles() {
 
 // todo
 function addRole() {
+   let departmentArr = [];
+   db.query('SELECT id, name FROM departments', (err,result) => {
+      console.log(result);
+   })
 }
 
 // Prints out departments table
