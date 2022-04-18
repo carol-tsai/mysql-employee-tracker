@@ -3,7 +3,7 @@ CREATE DATABASE company_db;
 
 USE company_db;
 
-DROP TABLE IF EXISTS department;
+DROP TABLE IF EXISTS departments;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS employees;
 
@@ -13,10 +13,11 @@ CREATE TABLE departments (
 );
 
 CREATE TABLE roles (
-  id INT PRIMARY KEY,
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(30) NOT NULL,
   department_id INT,
   salary DECIMAL NOT NULL,
+  CONSTRAINT fk_department
   FOREIGN KEY (department_id)
   REFERENCES departments(id)
   ON DELETE SET NULL
@@ -30,7 +31,5 @@ CREATE TABLE employees (
   manager_id INT,
   FOREIGN KEY (role_id)
   REFERENCES roles(id)
-  FOREIGN KEY (manager_id)
-  REFERENCES manager(id)
   ON DELETE SET NULL
 );
