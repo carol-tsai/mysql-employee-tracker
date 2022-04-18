@@ -64,7 +64,7 @@ function mainMenu() {
 }
 
 
-// todo
+// Prints out Employees table
 function viewEmployees() {
    db.query("SELECT * from employees", function(err, result) {
       console.table(result);
@@ -81,7 +81,7 @@ function addEmployee() {
 function updateEmployeeRole() {
 }
 
-// todo
+// Prints out roles table
 function viewAllRoles() {
    db.query("SELECT * from roles", function (err, result) {
       console.table(result);
@@ -94,12 +94,27 @@ function viewAllRoles() {
 function addRole() {
 }
 
-// todo
+// Prints out departments table
 function viewAllDepartments() {
+   db.query("SELECT * from departments", function (err, result) {
+      console.table(result);
+      mainMenu();
+   })
 }
 
-// todo
+// Takes an input department name and adds it to the department table
 function addDepartment() {
+   inquirer.prompt([{
+      type: "input",
+      name: "department",
+      message: "What is the name of the department?",
+   }]).then((data) => {
+      db.query('INSERT INTO departments SET ?', 
+      {name: data.department}, (err) => {
+         console.log("Added " + data.department + " to departments.");
+         mainMenu();
+      })
+   })
 }
 
 mainMenu();
