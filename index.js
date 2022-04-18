@@ -58,6 +58,8 @@ function mainMenu() {
             case "Add Department":
                addDepartment();
                break;
+            case "Quit":
+               process.exit();
 
          }
       })
