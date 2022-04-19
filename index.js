@@ -81,7 +81,11 @@ function mainMenu() {
 
 // Prints out Employees table
 function viewEmployees() {
-   db.query("SELECT * from employees", function(err, result) {
+   db.query(`SELECT e.id, e.first_name, e.last_name, roles.title, departments.name AS department, 
+roles.salary, CONCAT(m.first_name, ' ' ,  m.last_name) AS manager
+FROM employees e LEFT JOIN employees m ON e.manager_id = m.id
+JOIN roles ON e.role_id = roles.id
+JOIN departments ON roles.department_id = departments.id;`, function(err, result) {
       console.table(result);
       mainMenu();
    })
@@ -98,7 +102,7 @@ function updateEmployeeRole() {
 
 // Prints out roles table
 function viewAllRoles() {
-   db.query("SELECT * from roles", function (err, result) {
+   db.query("SELECT title, departments.name AS department, salary FROM roles JOIN departments ON roles.department_id = departments.id; ", function (err, result) {
       console.table(result);
       mainMenu();
    })
