@@ -32,19 +32,6 @@ const menu = [
    }
 ];
 
-const roleQuestions = [
-   {
-      type: "input",
-      name: "name",
-      message: "What is the name of the role?",
-   },
-   {
-      type: 'input',
-      name: 'salary',
-      message: 'What is the salary of the role?'
-   }
-];
-
 function mainMenu() {
    inquirer.prompt(menu)
       .then((data) => {
@@ -100,21 +87,62 @@ function addEmployee() {
 function updateEmployeeRole() {
 }
 
-// Prints out roles table
+// Prints out all roles with the job title, role id, the department that role belongs to, and the salary for that role
 function viewAllRoles() {
-   db.query("SELECT title, departments.name AS department, salary FROM roles JOIN departments ON roles.department_id = departments.id; ", function (err, result) {
+   db.query(`SELECT title, departments.name AS department, salary
+FROM roles
+JOIN departments ON roles.department_id = departments.id;`, function (err, result) {
       console.table(result);
       mainMenu();
-   })
+   });
    
 }
 
-// todo
-function addRole() {
+// Takes in role name, salary and department and adds it to the roles table
+async function addRole() {
    let departmentArr = [];
-   db.query('SELECT id, name FROM departments', (err,result) => {
-      console.log(result);
+   let departments;
+   db.query('SELECT id, name FROM departments'
+   , (err,result) => {
+      departments = result
+      departmentArr = result.map(dep => {
+         return dep.name;
+      });
+
+      inquirer.prompt([
+         {
+            type: "input",
+            name: "name",
+            message: "What is the name of the role?",
+         },
+         {
+            type: 'input',
+            name: 'salary',
+            message: 'What is the salary of the role?'
+         },
+         {
+            type: 'list',
+            name: 'department',
+            message: 'What department is this role in?',
+            choices: departmentArr,
+         }
+      ]).then((data) => {
+         let deptId;
+         for (let i = 0; i < departments.length; i++) {
+            if(departments[i].name = data.department){
+               deptId = departments[i].id;
+            }            
+         }
+         console.log('department id is ' + deptId);
+         db.query(`INSERT INTO roles(title, department_id, salary) 
+         VALUES ("${data.name}", "${deptId}", "${data.salary}")`);
+         console.log(data.name + " role has been added");
+         mainMenu();
+      })
    })
+   
+
+   
 }
 
 // Prints out departments table
