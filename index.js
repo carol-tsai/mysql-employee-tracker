@@ -86,7 +86,6 @@ function addEmployee() {
    let managersArr
    db.query('SELECT id, title FROM roles', (err, result) => {
       roles = result;
-      console.log(roles)
 
    });
    db.query("SELECT id, first_name, CONCAT(first_name, ' ' ,last_name) AS name FROM employees",
@@ -94,7 +93,6 @@ function addEmployee() {
          managers = result
          managersArr = result.map(manager => { return manager.name });
          managersArr.unshift('none');
-         console.log("list of managers", managersArr);
          inquirer.prompt([
             {
                type: 'input',
@@ -142,7 +140,7 @@ function addEmployee() {
       });
 }
 
-// todo
+// Allows you to reassign the role of an employee
 function updateEmployeeRole() {
    let employees;
    let roles;
@@ -208,7 +206,6 @@ async function addRole() {
    db.query('SELECT id, name FROM departments'
       , (err, result) => {
          departments = result
-         console.log(departments);
          departmentArr = result.map(dep => {
             return dep.name;
          });
