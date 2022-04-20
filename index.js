@@ -146,7 +146,7 @@ function addEmployee() {
 function updateEmployeeRole() {
    let employees;
    let roles;
-   db.query("SELECT CONCAT(first_name, ' ' ,last_name) AS name, role_id FROM employees", (err, result) => {
+   db.query("SELECT CONCAT(first_name, ' ' ,last_name) AS name, id FROM employees", (err, result) => {
       employees = result;
       console.log(result);
    });
@@ -172,15 +172,17 @@ function updateEmployeeRole() {
          for (let i = 0; i < roles.length; i++) {
             if(roles[i].title == data.role) {
                roleId = roles[i].id
+               console.log("role id is" + roleId);
             } 
          }
          for (let i = 0; i < employees.length; i++) {
-            if(employees[i].name = data.name) {
-               
+            if(employees[i].name == data.name) {
+               employeeId = employees[i].id
+               console.log("employee id is", employeeId)
             }
             
          }
-         db.query(`UPDATE employees SET role = roleId WHERE `)
+         db.query(`UPDATE employees SET role_id = ${roleId} WHERE id = ?`, employeeId);
          mainMenu()
       });
    
@@ -189,9 +191,10 @@ function updateEmployeeRole() {
 
 // Prints out all roles with the job title, role id, the department that role belongs to, and the salary for that role
 function viewAllRoles() {
-   db.query(`SELECT id, title, departments.name AS department, salary
+   db.query(`SELECT roles.id, title, departments.name AS department, salary
 FROM roles
-JOIN departments ON roles.department_id = departments.id ORDER BY id ASC;`, function (err, result) {
+JOIN departments ON roles.department_id = departments.id
+ORDER BY roles.id ASC;`, function (err, result) {
       console.table(result);
       mainMenu();
    });

@@ -1,7 +1,7 @@
-SELECT title, departments.name AS department, salary
+SELECT roles.id, title, departments.name AS department, salary
 FROM roles
 JOIN departments ON roles.department_id = departments.id
-ORDER BY id ASC;
+ORDER BY roles.id ASC;
 
 -- SELECT e.id, e.first_name, e.last_name, roles.title, departments.name AS department, 
 -- roles.salary, CONCAT(m.first_name, ' ' ,  m.last_name) AS manager
