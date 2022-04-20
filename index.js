@@ -146,7 +146,6 @@ function updateEmployeeRole() {
    let roles;
    db.query("SELECT CONCAT(first_name, ' ' ,last_name) AS name, id FROM employees", (err, result) => {
       employees = result;
-      console.log(result);
    });
    db.query("SELECT id, title FROM roles", (err, result) => {
       roles = result;
@@ -170,13 +169,11 @@ function updateEmployeeRole() {
          for (let i = 0; i < roles.length; i++) {
             if(roles[i].title == data.role) {
                roleId = roles[i].id
-               console.log("role id is" + roleId);
             } 
          }
          for (let i = 0; i < employees.length; i++) {
             if(employees[i].name == data.name) {
                employeeId = employees[i].id
-               console.log("employee id is", employeeId)
             }
             
          }
@@ -200,7 +197,7 @@ ORDER BY roles.id ASC;`, function (err, result) {
 }
 
 // Takes in role name, salary and department and adds it to the roles table
-async function addRole() {
+function addRole() {
    let departmentArr = [];
    let departments;
    db.query('SELECT id, name FROM departments'

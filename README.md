@@ -27,7 +27,7 @@ node index
    ![Screenshot of main menu](./images/menu.png)
 
    Watch this video for details on appliation usage.
-   [Link to walkthrough video](https://drive.google.com/file/d/11Y3c3nQ5BhxJF-5Zz8mj6jptRlawKGI0/view?usp=sharing)
+   [Link to walkthrough video](https://drive.google.com/file/d/1PL87OhY6O5os7AR7MA83hySqzNFqQPqC/view?usp=sharing)
 
   ## License
   MIT License
